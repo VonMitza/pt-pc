@@ -65,6 +65,7 @@ inline constexpr Text kMenu[] = {
     {"op_sub_ukrainian","Українська"},
     {"op_sub_czech","Чеська"},
     {"op_sub_polish","Польська"},
+    {"op_sub_romanian","Румунська"},
     {"op_camera_setting","Камера"},
     {"op_camera_y_axis","По вертикалі"},
     {"op_camera_x_axis","По горизонталі"},

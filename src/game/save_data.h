@@ -23,7 +23,7 @@ struct GameOptions {
 // subtitle language from the system language (sceSystemServiceParamGetInt(1)): Japanese 4, English (US, UK) 0 with the subtitles
 // off, French 1, Spanish (and Latin American) 3, German 2, Italian 5, Portuguese (PT, BR) 6, any other language 0 with the
 // subtitles on. The port's added languages map the same way: Turkish 7, Simplified Chinese 8, Arabic 9, Russian 10,
-// Ukrainian 11, Czech 12. `locale` is a BCP 47 tag ("en-US", "zh-Hans-CN", "pt-BR").
+// Ukrainian 11, Czech 12, Polish 13, Romanian 14. `locale` is a BCP 47 tag ("en-US", "zh-Hans-CN", "pt-BR").
 GameOptions DefaultOptionsForLocale(std::string_view locale);
 // the Windows UI language (GetUserDefaultUILanguage) as a BCP 47 tag; PT_SYSTEM_LANGUAGE overrides it (the tests set en-US, the
 // language of the reference captures' system)

@@ -52,6 +52,7 @@ inline constexpr Text kMenu[] = {
     {"op_sub_ukrainian","Ucraniano"},
     {"op_sub_czech","Checo"},
     {"op_sub_polish","Polaco"},
+    {"op_sub_romanian","Rumano"},
     {"pc_loop_browser","Selector de bucles"},
     {"pc_note_loop_browser_entry","Inicia cualquier bucle sin reemplazar tu partida guardada."},
     {"pc_loop_choose","Elige un bucle"},

@@ -45,7 +45,7 @@ inline constexpr Text kMenu[] = {
     {"pc_photo_filter_muted","Soluk"},
     {"pc_archive_model_hint","WASD / sol analog: yaklaş veya uzaklaş. Sağ mouse / sağ analog: bak. Space/Ctrl / tetikler: yüksel/alçal. Shift/L3: hızlan. Esc / Daire: geri."},
     {"pc_note_resolution_fullscreen","Çerçevesiz mod seçilen boyutu kullanır; özel tam ekran desteklenen ekran boyutunu kullanır."},
-    {"op_sub_turkish","Türkçe"},{"op_sub_chinese","Çince (basitleştirilmiş)"},{"op_sub_arabic","Arapça"},{"op_sub_russian","Rusça"},{"op_sub_ukrainian","Ukraynaca"},{"op_sub_czech","Çekçe"},{"op_sub_polish","Lehçe"},
+    {"op_sub_turkish","Türkçe"},{"op_sub_chinese","Çince (basitleştirilmiş)"},{"op_sub_arabic","Arapça"},{"op_sub_russian","Rusça"},{"op_sub_ukrainian","Ukraynaca"},{"op_sub_czech","Çekçe"},{"op_sub_polish","Lehçe"},{"op_sub_romanian","Rumence"},
     {"op_options","SEÇENEKLER"},{"op_back","Geri"},{"op_brightness_setting","Parlaklık"},
     {"op_britness_tip","Yalnızca soldaki resim görünene kadar parlaklığı ayarlayın."},
     {"op_subtitles_setting","Altyazılar"},{"op_sub_none","Kapalı"},{"op_sub_english","İngilizce"},

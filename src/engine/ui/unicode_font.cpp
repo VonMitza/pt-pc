@@ -5,7 +5,7 @@
 #include <array>
 #include <cstdio>
 
-// Unicode fonts for the languages the original did not ship (Turkish, Chinese, Arabic, Russian, Ukrainian, Czech): the bundled Noto
+// Unicode fonts for the languages the original did not ship (Turkish, Chinese, Arabic, Russian, Ukrainian, Czech, Polish, Romanian): the bundled Noto
 // fonts rasterised and shaped by the system on Windows (GDI and Uniscribe, below), and by HarfBuzz and stb_truetype
 // elsewhere (unicode_font_harfbuzz.cpp).
 namespace pt::ui {

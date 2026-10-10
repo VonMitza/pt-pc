@@ -33,6 +33,9 @@ int main() {
     expect("cs", true, 12);
     expect("pl", true, 13);
     expect("pl-PL", true, 13);
+    expect("ro", true, 14);
+    expect("ro-RO", true, 14);
+    expect("ro-MD", true, 14);
     // a language the original does not know: English with the subtitles left on
     expect("ko-KR", true, 0);
     expect("zh-TW", true, 0);

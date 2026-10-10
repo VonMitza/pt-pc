@@ -15,7 +15,7 @@ Everything the engine needs from the operating system beyond SDL3 goes through `
 | `http.h`: HTTPS GET (update check) | WinHTTP | the system libcurl, loaded with `dlopen` (the game starts without it) |
 | `update_check.h` | shared | shared |
 | the setup's integrity stamp (`self_integrity.h`) | BCrypt | a built-in SHA-256 (checked against the FIPS vectors), `/proc/self/exe` |
-| Unicode fonts (Turkish, Chinese, Arabic, Russian, Ukrainian, Czech, Polish UI) | GDI + Uniscribe (`unicode_font.cpp`) | HarfBuzz 14.6.0 (fetched, built into the binary) + stb_truetype (`unicode_font_harfbuzz.cpp`), a small bidi pass for Arabic lines |
+| Unicode fonts (Turkish, Chinese, Arabic, Russian, Ukrainian, Czech, Polish, Romanian UI) | GDI + Uniscribe (`unicode_font.cpp`) | HarfBuzz 14.6.0 (fetched, built into the binary) + stb_truetype (`unicode_font_harfbuzz.cpp`), a small bidi pass for Arabic lines |
 | voice recognizer (whisper.cpp, `formats/voice.md`) | `whisper.dll`, `ggml*.dll` in `voice/`, `LoadLibraryExW` | `libwhisper.so`, `libggml*.so` in `voice/` (RPATH `$ORIGIN`), `dlopen`; worker thread at nice 10 |
 | enhanced textures | `realesrgan-ncnn-vulkan.exe` + `vcomp140.dll` | `realesrgan-ncnn-vulkan` (the project's ubuntu release, SHA-256 d0e8e1cf...) |
 | game folder search next to the executable | yes | yes (`pt::ExecutableDir`) |

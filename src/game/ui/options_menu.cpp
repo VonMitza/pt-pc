@@ -74,9 +74,9 @@ constexpr int kFirstSubtitleSelector = 4;
 constexpr int kLastSubtitleSelector = kFirstSubtitleSelector + UiAssets::kLanguageCount;
 constexpr const char* kLanguageKeys[] = {"op_sub_none", "op_sub_english", "op_sub_french", "op_sub_german",
     "op_sub_spanish", "op_sub_japanese", "op_sub_itlian", "op_sub_portuguese", "op_sub_turkish",
-    "op_sub_chinese", "op_sub_arabic", "op_sub_russian", "op_sub_ukrainian", "op_sub_czech", "op_sub_polish"};
+    "op_sub_chinese", "op_sub_arabic", "op_sub_russian", "op_sub_ukrainian", "op_sub_czech", "op_sub_polish", "op_sub_romanian"};
 constexpr std::string_view kNativeLanguageNames[] = {"", "English", "Français", "Deutsch", "Español",
-    "日本語", "Italiano", "Português", "Türkçe", "Chinese (Simplified)", "Arabic", "Russian", "Ukrainian", "Czech", "Polish"};
+    "日本語", "Italiano", "Português", "Türkçe", "Chinese (Simplified)", "Arabic", "Russian", "Ukrainian", "Czech", "Polish", "Romanian"};
 static_assert(std::size(kLanguageKeys) == UiAssets::kLanguageCount + 1);
 static_assert(std::size(kNativeLanguageNames) == std::size(kLanguageKeys));
 
@@ -154,8 +154,10 @@ bool OptionsMenu::Init(UiAssets& assets) {
     const ui::UifNode label_template = *derived_->FindById(121);
     for (int i = 0; i <= UiAssets::kLanguageCount; ++i) {
         ui::UifNode row = row_template;
-        row.translate.x += i < 7 ? -11.0f : 11.0f;
-        row.translate.y -= static_cast<float>(i < 7 ? i : i - 7) * 2.5f;
+        // two columns of eight rows (off and fifteen languages), no taller than the right column was with fourteen
+        constexpr int kColumnRows = (UiAssets::kLanguageCount + 2) / 2;
+        row.translate.x += i < kColumnRows ? -11.0f : 11.0f;
+        row.translate.y -= static_cast<float>(i < kColumnRows ? i : i - kColumnRows) * 2.5f;
         const auto group = derived_->AddNode(std::move(row), StrCode64(std::format("option_language_row_{}", i)));
         ui::UifNode label = label_template;
         label.parent = derived_->IndexOfId(group);
