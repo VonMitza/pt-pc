@@ -7,6 +7,7 @@
 namespace pt::romanian {
 struct Text { std::string_view key, text; };
 inline constexpr Text kMenu[] = {
+    {"pc_restart_needed","Trebuie să repornești jocul pentru ca această modificare să intre în vigoare."},
     {"pc_controller_speaker","Difuzorul controllerului"},
     {"pc_note_controller_speaker","Redă plânsetele Lisei prin difuzorul controllerelor Sony compatibile. Pe Windows necesită USB; dispozitivele necompatibile și Bluetooth rămân silențioase. Independent de efectele haptice; dezactivat implicit."},
     {"pc_controller_speaker_volume","Volumul difuzorului controllerului"},
