@@ -40,10 +40,26 @@ jobs:
           where clang-cl glslc ninja cmake
           cmake --preset release -B build\release || exit /b 1
           cmake --build build\release --target pt pt_release || exit /b 1
-          mkdir out
-          copy build\release\pt_release.exe out\pt.exe
+
+      # pt.exe needs the shaders of its own build: a newer source than the installed release can add shaders the installed
+      # shaders folder lacks (the scene renderer then refuses to start), so the update carries them with pt.exe
+      - name: Package
+        shell: cmd
+        run: |
+          mkdir out\update\shaders
+          copy build\release\pt_release.exe out\update\pt.exe || exit /b 1
+          copy build\release\shaders\*.spv out\update\shaders\ || exit /b 1
+          python tools\package.py --build build\release --exe build\release\pt_release.exe --out out\full || echo full package skipped
+          exit /b 0
 
       - uses: actions/upload-artifact@v4
         with:
-          name: pt-exe-romana
-          path: out/pt.exe
+          name: pt-romana-actualizare
+          path: out/update/
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pt-romana-complet
+          path: out/full/*.zip
+          if-no-files-found: warn
