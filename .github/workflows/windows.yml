@@ -1,0 +1,49 @@
+# The Windows game (pt.exe) built on GitHub's runners, for a fork without a local toolchain: Actions > Windows > Run workflow,
+# or any push to a branch. The artifact holds pt.exe (the shipped pt_release build, as tools/package.py ships it), to put in
+# place of the installed one; the DLLs, shaders, fonts and the rest of an installed 1.0.2 folder stay as they are.
+name: Windows
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  game:
+    runs-on: windows-2025
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Vulkan SDK
+        shell: pwsh
+        run: |
+          $installer = "$env:RUNNER_TEMP\vulkan_sdk.exe"
+          Invoke-WebRequest "https://sdk.lunarg.com/sdk/download/latest/windows/vulkan_sdk.exe?Human=true" -OutFile $installer
+          & $installer --root C:\VulkanSDK --accept-licenses --default-answer --confirm-command install | Out-Host
+          "VULKAN_SDK=C:\VulkanSDK" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "C:\VulkanSDK\Bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+
+      - name: Ninja
+        run: pip install ninja
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Build
+        shell: cmd
+        run: |
+          set "PATH=C:\Program Files\LLVM\bin;%PATH%"
+          where clang-cl glslc ninja cmake
+          cmake --preset release -B build\release || exit /b 1
+          cmake --build build\release --target pt pt_release || exit /b 1
+          mkdir out
+          copy build\release\pt_release.exe out\pt.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pt-exe-romana
+          path: out/pt.exe
