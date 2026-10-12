@@ -1,4 +1,5 @@
-# The Romanian translation's release: pushing a tag v<port version>-ro<n> (v1.0.3-ro1) builds pt.exe on the tag's code and
+# The Romanian translation's release: Actions > Release (română) > Run workflow with a tag v<port version>-ro<n> (v1.0.3-ro1),
+# or pushing such a tag, builds pt.exe on that code and
 # publishes a GitHub Release with only the translated pt.exe and an install guide (.github/romana/CITESTE-MA.txt). The release
 # text is .github/romana/release.md; {{VERSION}}, {{TAG}}, {{ZIP}} and {{SHA256}} are filled in here.
 name: Release (română)
@@ -6,6 +7,12 @@ name: Release (română)
 on:
   push:
     tags: ['v*-ro*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag-ul Release-ului (v<versiune>-ro<n>)'
+        required: true
+        default: 'v1.0.3-ro1'
 
 permissions:
   contents: write
@@ -21,13 +28,14 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          $tag = "${{ github.ref_name }}"
+          $tag = "${{ inputs.tag || github.ref_name }}"
           if ($tag -notmatch '^v(\d+\.\d+\.\d+)-ro\d+$') { throw "tag $tag is not v<x.y.z>-ro<n>" }
           $version = $Matches[1]
           $cmake = Get-Content CMakeLists.txt -Raw
           if ($cmake -notmatch "set\(PT_VERSION `"$([regex]::Escape($version))`"\)") { throw "CMakeLists.txt is not version $version" }
           "version=$version" >> $env:GITHUB_OUTPUT
           "zip=PT-PC-Port-$version-Traducere-Romana.zip" >> $env:GITHUB_OUTPUT
+          "tag=$tag" >> $env:GITHUB_OUTPUT
 
       - name: Vulkan SDK
         shell: pwsh
@@ -63,7 +71,7 @@ jobs:
           $sha = (Get-FileHash out\pkg\pt.exe -Algorithm SHA256).Hash.ToLower()
           $utf8 = New-Object System.Text.UTF8Encoding $false
           function Fill($text) {
-            $text.Replace('{{VERSION}}', $version).Replace('{{TAG}}', "${{ github.ref_name }}").Replace('{{ZIP}}', $zip).Replace('{{SHA256}}', $sha)
+            $text.Replace('{{VERSION}}', $version).Replace('{{TAG}}', "${{ steps.version.outputs.tag }}").Replace('{{ZIP}}', $zip).Replace('{{SHA256}}', $sha)
           }
           $guide = Fill ([IO.File]::ReadAllText(".github\romana\CITESTE-MA.txt", $utf8))
           [IO.File]::WriteAllText("out\pkg\CITESTE-MA.txt", ($guide -replace "`r?`n", "`r`n"), $utf8)
@@ -77,6 +85,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           $version = "${{ steps.version.outputs.version }}"
-          gh release create "${{ github.ref_name }}" "out\${{ steps.version.outputs.zip }}" `
+          # a tag that does not exist yet is made on this run's commit
+          gh release create "${{ steps.version.outputs.tag }}" "out\${{ steps.version.outputs.zip }}" --target "${{ github.sha }}" `
             --title "P.T. PC Port $version — Traducere în limba română" `
             --notes-file out\notes.md --latest
