@@ -1,3 +1,0 @@
-swait 10
-sexpect subtitles 1
-slog

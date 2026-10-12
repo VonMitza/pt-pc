@@ -1,2 +1,0 @@
-sanchor
-gfile 0 -1.4 -4.0

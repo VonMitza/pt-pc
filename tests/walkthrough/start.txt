@@ -1,3 +1,0 @@
-goto 0 0 12.5
-swait 10
-sfree

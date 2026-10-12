@@ -1,2 +1,0 @@
-swait 90
-sstate save

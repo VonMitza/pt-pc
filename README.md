@@ -1,4 +1,4 @@
-![Traducere în limba română](https://raw.githubusercontent.com/VonMitza/pt-pc/romana/docs/media/traducere-romana.png)
+![Traducere în limba română](imagini/traducere-romana.png)
 <sub>Textele traducerii, afișate cu fontul pe care îl folosește jocul.</sub>
 
 # P.T. pe PC, acum în limba română 🇷🇴
@@ -27,7 +27,7 @@ Urmează instrucțiunile de acolo. Ai nevoie de copia ta de P.T. de pe PS4. Porn
 **2. Descarcă traducerea**
 
 Descarcă din **Releases** traducerea:
-👉 **https://github.com/VonMitza/pt-pc/releases**
+👉 **https://github.com/VonMitza/pt-pc-romanian/releases**
 
 **3. Pune traducerea peste joc**
 
@@ -46,13 +46,13 @@ Salvările și setările tale (folderul `data`) rămân neatinse.
 - **Doar pentru Windows** (10 sau 11, 64-bit).
 - **Doar pentru versiunea 1.0.3.** Când apare o versiune nouă a portului, instalează-o din proiectul original și așteaptă traducerea actualizată de aici. Un `pt.exe` vechi peste un joc nou (sau invers) poate să nu pornească.
 - **Dezinstalare:** șterge `pt.exe` și redenumește `pt.exe.original` înapoi în `pt.exe`, sau reinstalează jocul din proiectul original.
-- Windows SmartScreen poate avertiza că fișierul nu e semnat. E normal pentru un `pt.exe` compilat de comunitate. Fișierul e compilat public, de GitHub, din codul sursă al acestui fork, iar amprenta lui e mai jos.
+- Windows SmartScreen poate avertiza că fișierul nu e semnat. E normal pentru un `pt.exe` compilat de comunitate. Fișierul e compilat public, de GitHub, iar amprenta lui apare în descrierea Release-ului.
 
 ## Detalii tehnice
 
-- Compilat automat de GitHub Actions, din tag-ul `v1.0.3-ro1`, peste codul oficial `v1.0.3`.
-- SHA-256 pentru `pt.exe`: `8488fd3c39c0bd135a1e9be45b7e12d3c1ae2aa01cac1f0023ec0ea56deca564`
-- Modificările se găsesc pe ramura [`romana`](https://github.com/VonMitza/pt-pc/tree/romana). Traducerea este în `src/engine/core/romanian_text.h`.
+- Compilat automat de GitHub Actions din codul oficial al portului, versiunea `v1.0.3`, cu traducerea aplicată peste.
+- Amprenta SHA-256 a fiecărui `pt.exe` se află în descrierea Release-ului.
+- Toate textele traducerii sunt în [`traducere/romanian_text.h`](traducere/romanian_text.h). Restul modificărilor (româna adăugată în lista de limbi) sunt în [`traducere/romana-1.0.3.patch`](traducere/romana-1.0.3.patch).
 
 ## Mulțumiri
 
@@ -61,4 +61,4 @@ Salvările și setările tale (folderul `data`) rămân neatinse.
 P.T. este proprietatea Konami Digital Entertainment și Kojima Productions. Nici portul, nici traducerea nu sunt afiliate cu Konami sau Kojima Productions. Nu conțin fișiere ale jocului și nu funcționează fără copia ta de P.T.
 
 ---
-Traducere în limba română: **VonMitza**. Ai găsit o greșeală sau o formulare ciudată? [Deschide un issue](https://github.com/VonMitza/pt-pc/issues).
+Traducere în limba română: **VonMitza**. Ai găsit o greșeală sau o formulare ciudată? [Deschide un issue](https://github.com/VonMitza/pt-pc-romanian/issues).

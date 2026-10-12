@@ -1,2 +1,0 @@
-sexpect gimmick Freezer 1
-sexpect gimmick CeilLamp 0

@@ -30,11 +30,11 @@ BINE DE ȘTIUT
 - Doar pentru Windows 10/11, 64-bit.
 - Doar pentru versiunea {{VERSION}} a portului. La o versiune nouă a jocului,
   descarcă și traducerea actualizată:
-  https://github.com/VonMitza/pt-pc/releases
+  https://github.com/VonMitza/pt-pc-romanian/releases
 - Vocile rămân în engleză, iar cuvântul pentru microfon rămâne "Jack".
 
 SHA-256 pt.exe: {{SHA256}}
 
 P.T. PC Port: LoreanXavier - https://github.com/LoreanXavier/pt-pc
-Traducere: VonMitza - https://github.com/VonMitza/pt-pc
+Traducere: VonMitza - https://github.com/VonMitza/pt-pc-romanian
 P.T. este proprietatea Konami Digital Entertainment și Kojima Productions.

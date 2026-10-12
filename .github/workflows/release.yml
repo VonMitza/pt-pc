@@ -1,0 +1,112 @@
+# Releases the Romanian translation: Actions > Release > Run workflow with a tag v<port version>-ro<n> (v1.0.3-ro1).
+# It checks out LoreanXavier/pt-pc at v<port version>, applies traducere/romana-<port version>.patch (the language wiring),
+# copies traducere/romanian_text.h over (the texts, the one file to edit for corrections), builds pt.exe and publishes a
+# Release with only pt.exe and CITESTE-MA.txt. The release text is .github/romana/release.md.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag-ul Release-ului (v<versiune joc>-ro<n>)'
+        required: true
+        default: 'v1.0.3-ro2'
+      publica:
+        description: 'Publică Release-ul (debifat: doar compilează, pentru test)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-2025
+    timeout-minutes: 120
+    steps:
+      - name: Version
+        id: version
+        shell: pwsh
+        run: |
+          $tag = "${{ inputs.tag }}"
+          if ($tag -notmatch '^v(\d+\.\d+\.\d+)-ro\d+$') { throw "tag $tag is not v<x.y.z>-ro<n>" }
+          "version=$($Matches[1])" >> $env:GITHUB_OUTPUT
+          "zip=PT-PC-Port-$($Matches[1])-Traducere-Romana.zip" >> $env:GITHUB_OUTPUT
+
+      - uses: actions/checkout@v4
+        with:
+          path: traducere-repo
+
+      - uses: actions/checkout@v4
+        with:
+          repository: LoreanXavier/pt-pc
+          ref: v${{ steps.version.outputs.version }}
+          path: pt-pc
+
+      - name: Apply the translation
+        shell: pwsh
+        working-directory: pt-pc
+        run: |
+          $patch = "..\traducere-repo\traducere\romana-${{ steps.version.outputs.version }}.patch"
+          if (-not (Test-Path $patch)) { throw "no patch for version ${{ steps.version.outputs.version }}: $patch" }
+          git apply --whitespace=nowarn $patch
+          if ($LASTEXITCODE) { throw "the patch does not apply to v${{ steps.version.outputs.version }}" }
+          Copy-Item ..\traducere-repo\traducere\romanian_text.h src\engine\core\romanian_text.h -Force
+
+      - name: Vulkan SDK
+        shell: pwsh
+        run: |
+          $installer = "$env:RUNNER_TEMP\vulkan_sdk.exe"
+          Invoke-WebRequest "https://sdk.lunarg.com/sdk/download/latest/windows/vulkan_sdk.exe?Human=true" -OutFile $installer
+          & $installer --root C:\VulkanSDK --accept-licenses --default-answer --confirm-command install | Out-Host
+          "VULKAN_SDK=C:\VulkanSDK" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "C:\VulkanSDK\Bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+
+      - name: Ninja
+        run: pip install ninja
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Build
+        shell: cmd
+        working-directory: pt-pc
+        run: |
+          set "PATH=C:\Program Files\LLVM\bin;%PATH%"
+          cmake --preset release -B build\release || exit /b 1
+          cmake --build build\release --target pt_release || exit /b 1
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          $zip = "${{ steps.version.outputs.zip }}"
+          New-Item -ItemType Directory out\pkg | Out-Null
+          Copy-Item pt-pc\build\release\pt_release.exe out\pkg\pt.exe
+          $sha = (Get-FileHash out\pkg\pt.exe -Algorithm SHA256).Hash.ToLower()
+          $utf8 = New-Object System.Text.UTF8Encoding $false
+          function Fill($text) {
+            $text.Replace('{{VERSION}}', $version).Replace('{{TAG}}', "${{ inputs.tag }}").Replace('{{ZIP}}', $zip).Replace('{{SHA256}}', $sha)
+          }
+          $guide = Fill ([IO.File]::ReadAllText("traducere-repo\.github\romana\CITESTE-MA.txt", $utf8))
+          [IO.File]::WriteAllText("out\pkg\CITESTE-MA.txt", ($guide -replace "`r?`n", "`r`n"), $utf8)
+          [IO.File]::WriteAllText("out\notes.md", (Fill ([IO.File]::ReadAllText("traducere-repo\.github\romana\release.md", $utf8))), $utf8)
+          Compress-Archive -Path out\pkg\* -DestinationPath "out\$zip"
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !inputs.publica }}
+        with:
+          name: test-${{ inputs.tag }}
+          path: out/
+
+      - name: Release
+        if: ${{ inputs.publica }}
+        shell: pwsh
+        working-directory: traducere-repo
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ inputs.tag }}" "..\out\${{ steps.version.outputs.zip }}" --target "${{ github.sha }}" `
+            --title "Traducere - P.T. (${{ steps.version.outputs.version }})" `
+            --notes-file ..\out\notes.md --latest
