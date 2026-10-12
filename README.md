@@ -1,5 +1,14 @@
 # P.T. for PC
 
+> [!NOTE]
+> ## 🇷🇴 P.T. pe PC în limba română
+> Acest fork adaugă o **traducere completă în română** a portului P.T. pentru PC (meniuri, setări PC și toate subtitrările), cu diacritice corecte.
+>
+> **[⬇ Descarcă traducerea (Releases)](https://github.com/VonMitza/pt-pc/releases/latest)**: instalezi jocul din [proiectul original](https://github.com/LoreanXavier/pt-pc/releases), apoi pui traducerea peste. Pașii sunt în descrierea Release-ului.
+>
+> ![Traducere în limba română](docs/media/traducere-romana.png)
+
+
 ![Lisa in the hallway](docs/media/lisa.gif)
 
 If the port is worth something to you, you can buy me a coffee: [patreon.com/loreanxavier](https://www.patreon.com/loreanxavier). It keeps the testing hardware and the releases coming.

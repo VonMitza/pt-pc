@@ -1,0 +1,40 @@
+P.T. PC Port {{VERSION}} - Traducere în limba română
+====================================================
+
+Această arhivă conține DOAR traducerea în română (fișierul pt.exe), nu jocul.
+
+ÎNAINTE DE TOATE
+----------------
+Instalează jocul din proiectul original, versiunea {{VERSION}}:
+https://github.com/LoreanXavier/pt-pc/releases/tag/v{{VERSION}}
+Ai nevoie de copia ta de P.T. de pe PS4 (folderul CUSA01127).
+Pornește jocul o dată ca să verifici că merge.
+
+INSTALARE
+---------
+1. Deschide folderul jocului. Implicit este:
+      %LocalAppData%\Programs\P.T. PC Port
+   (poți lipi calea direct în bara de adrese din Explorer)
+2. Redenumește pt.exe existent în pt.exe.original, ca să-l ai ca rezervă.
+3. Copiază pt.exe din această arhivă în folderul jocului.
+4. Pornește jocul: Opțiuni -> Subtitrări -> Română.
+
+Salvările și setările tale (folderul data) rămân neatinse.
+
+DEZINSTALARE
+------------
+Șterge pt.exe și redenumește pt.exe.original înapoi în pt.exe.
+
+BINE DE ȘTIUT
+-------------
+- Doar pentru Windows 10/11, 64-bit.
+- Doar pentru versiunea {{VERSION}} a portului. La o versiune nouă a jocului,
+  descarcă și traducerea actualizată:
+  https://github.com/VonMitza/pt-pc/releases
+- Vocile rămân în engleză, iar cuvântul pentru microfon rămâne "Jack".
+
+SHA-256 pt.exe: {{SHA256}}
+
+P.T. PC Port: LoreanXavier - https://github.com/LoreanXavier/pt-pc
+Traducere: VonMitza - https://github.com/VonMitza/pt-pc
+P.T. este proprietatea Konami Digital Entertainment și Kojima Productions.
